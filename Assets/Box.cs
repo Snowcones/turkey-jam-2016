@@ -20,7 +20,7 @@ public class Box : MonoBehaviour
         halfsz = gameObject.GetComponent<Renderer>().bounds.size.x / 2;
         rg_box = GetComponent<Rigidbody>();
     }
-
+     
     // Update is called once per frame
     void Update()
     {

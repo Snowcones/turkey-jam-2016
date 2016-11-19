@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     public float angle = 0;
     public AudioSource gun;
 
+    public bool space_pressed = false;
+
     // Use this for initialization
     void Awake()
     {
@@ -22,22 +24,24 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && (space_pressed == false))
         {
             gun.Play();
             angle *= (Mathf.PI / 180);
             vel = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
             rg_bul.velocity = (vel * speed);
-        }
+            space_pressed = true;
+            }
+        
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed ==false))
         {
             transform.Rotate(0, 0, 10);
             angle += 10;
            // vel += new Vector3((Mathf.Cos(10), Mathf.Sin(10),0));
         }
         
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && (space_pressed == false))
         {
             transform.Rotate(0, 0, -10);
             angle += (-10);
