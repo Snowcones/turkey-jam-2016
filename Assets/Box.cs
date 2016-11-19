@@ -51,6 +51,7 @@ public class Box : MonoBehaviour
         {
             rg_box.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
             space_pressed = true;
+            rg_box.isKinematic = true;
         }
 
     }
@@ -61,19 +62,27 @@ public class Box : MonoBehaviour
         {
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             point.z = gameObject.transform.position.z;
-
+           
             gameObject.transform.position = point;
+           // GetComponentInChildren<Animation>().SetPosition(point);
         }
     }
-    void OnCollisionEnter(Collision col)
+   /* void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.name == "Bullet")
         {
             Destroy(gameObject);
+
+
+        } } */
+        void OnTriggerEnter(Collider other)
+    {
+            if (other.gameObject.name == "Bullet") 
+            {  GetComponent<Animator>().SetTrigger("break");
+          }
         }
 
-
     }
-}
+
 
 

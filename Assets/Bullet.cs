@@ -17,15 +17,14 @@ public class Bullet : MonoBehaviour
     {
         rg_bul = GetComponent<Rigidbody>();
         tf_bul = GetComponent<Transform>();
-        gun = GetComponent<AudioSource>();
-  
-    }
+   }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && (space_pressed == false))
         {
+            gun = GetComponent<AudioSource>();
             gun.Play();
             angle *= (Mathf.PI / 180);
             vel = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
