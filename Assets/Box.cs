@@ -11,11 +11,12 @@ public class Box : MonoBehaviour
     private Rigidbody rg_box;
     public bool space_pressed = false;
 
-    private Vector3 wrld = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f));
+    private Vector3 wrld;
     public float halfsz;
     // Use this for initialization
     void Start()
     {
+		wrld = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0.0f));
         halfsz = gameObject.GetComponent<Renderer>().bounds.size.x / 2;
         rg_box = GetComponent<Rigidbody>();
     }
@@ -27,16 +28,25 @@ public class Box : MonoBehaviour
         posY = transform.position.y;
         posZ = transform.position.z;
 
-        if (gameObject.transform.position.x > (wrld.x - halfsz))
+		if (gameObject.transform.position.x > (wrld.x - halfsz)) //Off right
         {
             posX = wrld.x - halfsz;
         }
+		else if (gameObject.transform.position.x < -(wrld.x - halfsz)) //Off left
+        {
+            posX = -(wrld.x - halfsz);
+        }
 
-        if (gameObject.transform.position.y > (wrld.y - halfsz))
+        if (gameObject.transform.position.y > (wrld.y - halfsz)) //Off top
         {
             posY = wrld.y - halfsz;
         }
+		else if (gameObject.transform.position.y < -(wrld.y - halfsz)) //Off bottom
+        {
+            posY = -(wrld.y - halfsz);
+        }
 
+        gameObject.transform.position = new Vector3(posX, posY, posZ);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rg_box.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
