@@ -22,14 +22,9 @@ public class Zombie : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.name == "Bullet")
-        {
-            Destroy(gameObject);
+        {  Destroy(gameObject);
            zombie.Play();
             
-            //gameObject.SetActive(false);
-            //animation["Dead2"].wrapMode = WrapMode.Once;
-            //animation.Play("Dead1");
-            //AudioSource.PlayClipAtPoint("Zombie Long Death");
         }
     }
 }

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public Vector3 vel;
     public float angle = 0;
     public AudioSource gun;
+
     // Use this for initialization
     void Awake()
     {
@@ -24,6 +25,7 @@ public class Bullet : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gun.Play();
+            angle *= (Mathf.PI / 180);
             vel = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
             rg_bul.velocity = (vel * speed);
         }
@@ -38,7 +40,7 @@ public class Bullet : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             transform.Rotate(0, 0, -10);
-            angle += -10;
+            angle += (-10);
           
         }
 
