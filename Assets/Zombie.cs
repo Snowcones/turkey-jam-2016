@@ -8,11 +8,14 @@ public class Zombie : MonoBehaviour
 	public string animation;
     public bool isDead = false;
     public AudioSource zombie;
+    private bool level_cleared = false;
+	private Texture levelCleared;
 
     // Use this for initialization
     void Awake()
     {
-       zombie = GetComponent<AudioSource>();
+		levelCleared = Resources.Load("level_cleared3") as Texture;
+    	zombie = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,8 +61,20 @@ public class Zombie : MonoBehaviour
 
             //Checks to see if the level is cleared
             if(AllZombiesDead()) {
-            	Invoke("nextScene", 2);
+            	Invoke("showCleared", .5f);
             }
+        }
+    }
+
+    void showCleared() {
+		level_cleared = true;
+    }
+
+    void OnGUI() {
+    	if(level_cleared) {
+    		Debug.Log("Much GUI");
+	        GUI.DrawTexture(new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height)), levelCleared);
+	        Invoke("nextScene", 2.0f);
         }
     }
 }
