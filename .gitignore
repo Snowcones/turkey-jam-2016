@@ -8,7 +8,8 @@
 /[Ll]ibrary/
 sysinfo.txt
 *.stackdump
- 
+*.app
+
 # ============================================= #
 # Visual Studio / MonoDevelop / Rider generated #
 # ============================================= #
@@ -23,7 +24,7 @@ sysinfo.txt
 /*.unityproj
 /*.booproj
 /.idea*/
- 
+
 # ============ #
 # OS generated #
 # ============ #
