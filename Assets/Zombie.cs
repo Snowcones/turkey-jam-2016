@@ -19,9 +19,9 @@ public class Zombie : MonoBehaviour
     {
 
     }
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.name == "Bullet")
+        if (other.gameObject.name == "Bullet")
         {  Destroy(gameObject);
            zombie.Play();
             

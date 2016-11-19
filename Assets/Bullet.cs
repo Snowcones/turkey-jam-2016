@@ -52,10 +52,10 @@ public class Bullet : MonoBehaviour
     {
         if (col.transform.gameObject.name == "Box1")
         {
-            angle += 45;
-            rg_bul.velocity = speed * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
- 
-            //transform.Rotate(0, 0, 45);
+        	rg_bul.velocity = Vector3.Reflect(rg_bul.velocity, col.contacts[0].normal);
+			float newAngle = Mathf.Atan2(rg_bul.velocity.y, rg_bul.velocity.x) * 180 / Mathf.PI;
+			Debug.Log(newAngle);
+			transform.eulerAngles = new Vector3(0, 0, newAngle);
         }
     }
 }
