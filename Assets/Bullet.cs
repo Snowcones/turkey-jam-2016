@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Bullet : MonoBehaviour
@@ -31,22 +33,34 @@ public class Bullet : MonoBehaviour
             vel = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
             rg_bul.velocity = (vel * speed);
             space_pressed = true;
-            }
-        
+        }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed == false))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && (space_pressed == false))
         {
             transform.Rotate(0, 0, 10);
             angle += 10;
-           // vel += new Vector3((Mathf.Cos(10), Mathf.Sin(10),0));
+            // vel += new Vector3((Mathf.Cos(10), Mathf.Sin(10),0));
         }
-        
-        if (Input.GetKeyDown(KeyCode.DownArrow) && (space_pressed == false))
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) && (space_pressed == false))
         {
             transform.Rotate(0, 0, -10);
             angle += (-10);
-          
+
         }
+
+        if (SceneManager.GetActiveScene().buildIndex == 2) { 
+        if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed == false))
+        {
+            transform.Translate(new Vector3(0, 1, 0));
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) && (space_pressed == false))
+        {
+            transform.Translate(new Vector3(0, -1, 0));
+        }
+    }
+       
     }
 
    // void 

@@ -11,30 +11,41 @@ public class Zombie : MonoBehaviour
     private bool level_cleared = false;
     private Texture levelCleared;
 
-    public float delta = 1.5f; // Amount to move left & right from start point
-    public float speed = 2.0f;
-    private Vector3 startPos;
+    //public float delta = 1.5f; // Amount to move left & right from start point
+    //public float speed = 2.0f;
+    //Vector3 vel;
+    //private Vector3 pos1 = new Vector3(-4, 0, 0);
+    //private Vector3 pos2 = new Vector3(4, 0, 0);
+    //public float speed = 1.0f;
 
-    // Use this for initialization
-    void Awake()
+      
+
+        // Use this for initialization
+        void Awake()
     {
         levelCleared = Resources.Load("level_cleared3") as Texture;
         zombie = GetComponent<AudioSource>();
         int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
 
-        startPos = gameObject.transform.position;
-    }
+        }
 
     // Update is called once per frame
     void Update()
-    {
+    {  
+
         if (Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
 
-        Vector3 v = startPos;
-        v.x += delta * Mathf.Sin(Time.time * speed);
-        transform.position = v;
-    }
+      //  if (Input.GetKeyDown(KeyCode.N)) { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); }
+      //  if (SceneManager.GetActiveScene().buildIndex == 2); {
+        //        if (gameObject.GetComponent<Rigidbody>() != null) {
+          //      transform.position = Vector3.Lerp(pos1, pos2, Mathf.PingPong(Time.time * speed, 1.0f));
+                //vel = new Vector3(1, 0, 0);
+                //transform.Translate(vel * speed * Time.deltaTime);
+            //}
+               
+          }
+    
 
 
     bool AllZombiesDead() {
@@ -88,7 +99,7 @@ public class Zombie : MonoBehaviour
     	if(level_cleared) {
     		Debug.Log("Much GUI");
 	        GUI.DrawTexture(new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height)), levelCleared);
-	        Invoke("nextScene", 2.0f);
+	       Invoke("nextScene", 2.0f);
         }
     }
 }
