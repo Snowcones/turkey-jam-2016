@@ -16,11 +16,11 @@ public class Box : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		wrld = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0.0f));
+        wrld = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0.0f));
         halfsz = gameObject.GetComponent<Renderer>().bounds.size.x / 2;
         rg_box = GetComponent<Rigidbody>();
     }
-     
+
     // Update is called once per frame
     void Update()
     {
@@ -28,11 +28,11 @@ public class Box : MonoBehaviour
         posY = transform.position.y;
         posZ = transform.position.z;
 
-		if (gameObject.transform.position.x > (wrld.x - halfsz)) //Off right
+        if (gameObject.transform.position.x > (wrld.x - halfsz)) //Off right
         {
             posX = wrld.x - halfsz;
         }
-		else if (gameObject.transform.position.x < -(wrld.x - halfsz)) //Off left
+        else if (gameObject.transform.position.x < -(wrld.x - halfsz)) //Off left
         {
             posX = -(wrld.x - halfsz);
         }
@@ -41,7 +41,7 @@ public class Box : MonoBehaviour
         {
             posY = wrld.y - halfsz;
         }
-		else if (gameObject.transform.position.y < -(wrld.y - halfsz)) //Off bottom
+        else if (gameObject.transform.position.y < -(wrld.y - halfsz)) //Off bottom
         {
             posY = -(wrld.y - halfsz);
         }
@@ -51,9 +51,7 @@ public class Box : MonoBehaviour
         {
             rg_box.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
             space_pressed = true;
-            rg_box.isKinematic = true;
         }
-
     }
 
     void OnMouseDrag()
@@ -62,26 +60,21 @@ public class Box : MonoBehaviour
         {
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             point.z = gameObject.transform.position.z;
-           
+
             gameObject.transform.position = point;
-           // GetComponentInChildren<Animation>().SetPosition(point);
+            // GetComponentInChildren<Animation>().SetPosition(point);
         }
     }
-   /* void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.name == "Bullet")
+     void OnCollisionEnter(Collision col)
+     {
+         if (col.gameObject.name == "Bullet")
         {
-            Destroy(gameObject);
-
-
-        } } */
-        void OnTriggerEnter(Collider other)
-    {
-            if (other.gameObject.name == "Bullet") 
-            {  GetComponent<Animator>().SetTrigger("break");
-          }
+            gameObject.GetComponent<Animator>().SetTrigger("break");
+            rg_box.angularVelocity = Vector3.zero;
+            transform.eulerAngles = Vector3.zero;
+            rg_box.velocity = Vector3.zero;
         }
-
+      } 
     }
 
 

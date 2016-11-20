@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Bullet : MonoBehaviour
 {
     private Rigidbody rg_bul;
@@ -33,7 +34,7 @@ public class Bullet : MonoBehaviour
             }
         
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed ==false))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed == false))
         {
             transform.Rotate(0, 0, 10);
             angle += 10;
@@ -46,8 +47,6 @@ public class Bullet : MonoBehaviour
             angle += (-10);
           
         }
-
-        //vel.Normalize();
     }
 
    // void 

@@ -16,12 +16,14 @@ public class Zombie : MonoBehaviour
     {
 		levelCleared = Resources.Load("level_cleared3") as Texture;
     	zombie = GetComponent<AudioSource>();
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.R)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
     }
 
 	bool AllZombiesDead() {
@@ -45,6 +47,7 @@ public class Zombie : MonoBehaviour
 		if(nextScene < SceneManager.sceneCountInBuildSettings) {
             //Load the next level
             SceneManager.LoadScene(nextScene);
+
       	} else {
 			//At end of game
             Debug.Log(SceneManager.sceneCount);
