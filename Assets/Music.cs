@@ -5,7 +5,8 @@ public class Music : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        GameObject[] objs = GameObject.FindGameObjectWithTag("music");
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("music");
+        DontDestroyOnLoad(this.gameObject);
 	}
 	
 	// Update is called once per frame
