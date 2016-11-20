@@ -11,6 +11,14 @@ public class Zombie : MonoBehaviour
     private bool level_cleared = false;
     private Texture levelCleared;
 
+	private const int numCoins = 5;
+	private const float coinScatter = 3.0f;
+	private const float coinLife = 2.5f;
+
+	private GameObject coin;
+	private GameObject[] coins;
+	private float[] coinLives;
+
     //public float delta = 1.5f; // Amount to move left & right from start point
     //public float speed = 2.0f;
     //Vector3 vel;
@@ -20,21 +28,24 @@ public class Zombie : MonoBehaviour
 
       
 
-        // Use this for initialization
-        void Awake()
+    // Use this for initialization
+    void Awake()
     {
         levelCleared = Resources.Load("level_cleared3") as Texture;
         zombie = GetComponent<AudioSource>();
-        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
-
-        }
+        coin = Resources.Load("coin") as GameObject;
+        coins = new GameObject[numCoins];
+        coinLives = new float[numCoins];
+    }
 
     // Update is called once per frame
     void Update()
     {  
 
         if (Input.GetKeyDown(KeyCode.R)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //GetComponent<Animator>().SetTrigger()
+        }
 
       //  if (Input.GetKeyDown(KeyCode.N)) { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); }
       //  if (SceneManager.GetActiveScene().buildIndex == 2); {
@@ -43,8 +54,9 @@ public class Zombie : MonoBehaviour
                 //vel = new Vector3(1, 0, 0);
                 //transform.Translate(vel * speed * Time.deltaTime);
             //}
+          updateCoins(Time.deltaTime);
                
-          }
+   	}
     
 
 
@@ -84,6 +96,14 @@ public class Zombie : MonoBehaviour
             GetComponent<Animator>().SetTrigger(animation);
             isDead = true;
 
+            for(int c=0; c<numCoins; c++) {
+           		coins[c] = Instantiate(coin);
+           		coinLives[c] = coinLife + .2f * coinLife * Random.value;
+           		Rigidbody rigidbody = coins[c].GetComponent<Rigidbody>();
+           		rigidbody.position = transform.position;
+           		rigidbody.velocity = new Vector3((2*Random.value-1)*coinScatter, 2*Random.value*coinScatter, 0);
+            }
+
             //Checks to see if the level is cleared
             if(AllZombiesDead()) {
             	Invoke("showCleared", .5f);
@@ -97,9 +117,30 @@ public class Zombie : MonoBehaviour
 
     void OnGUI() {
     	if(level_cleared) {
-    		Debug.Log("Much GUI");
 	        GUI.DrawTexture(new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height)), levelCleared);
-	       Invoke("nextScene", 2.0f);
+	       	Invoke("nextScene", 2.0f);
         }
+    }
+
+    void updateCoins(float dt) {
+		for(int c=0; c<numCoins; c++) {
+			if(coins[c] == null) {
+				continue;
+			}
+			Rigidbody rigidbody = coins[c].GetComponent<Rigidbody>();
+       		rigidbody.velocity -= new Vector3(0, 9.8f*dt, 0);
+			if(rigidbody.position.y < transform.position.y - gameObject.GetComponent<BoxCollider>().bounds.size.y / 2 && rigidbody.velocity.y < 0) {
+       			rigidbody.velocity = new Vector3(.5f*rigidbody.velocity.x, -.3f*rigidbody.velocity.y, rigidbody.velocity.z);
+       		}
+       		coinLives[c] -= dt;
+       		if (coinLives[c] < 1) {
+       			SpriteRenderer renderer = coins[c].GetComponent<SpriteRenderer>();
+       			renderer.color = new Color(1.0f, 1.0f, 1.0f, coinLives[c]);
+       		}
+       		if (coinLives[c] < 0) {
+       			Destroy(coins[c]);
+       			coins[c] = null;
+       		}
+    	}
     }
 }

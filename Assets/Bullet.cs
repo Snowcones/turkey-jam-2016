@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
 
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2) { 
+        if (SceneManager.GetActiveScene().buildIndex == 3) { 
         if (Input.GetKeyDown(KeyCode.UpArrow) && (space_pressed == false))
         {
             transform.Translate(new Vector3(0, 1, 0));
